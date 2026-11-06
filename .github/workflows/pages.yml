@@ -27,16 +27,6 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Replace the inactive legacy domain
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          current_domain=$(gh api "repos/$GITHUB_REPOSITORY/pages" --jq '.cname // ""')
-          if [ "$current_domain" = "www.asmallattempttomakeituptoyou.com" ]; then
-            gh api --method PUT "repos/$GITHUB_REPOSITORY/pages" \
-              -F cname=null -f build_type=workflow
-          fi
-
       - name: Configure GitHub Pages
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
 
