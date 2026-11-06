@@ -42,7 +42,8 @@ jobs:
             console.log('Removed the inactive domain; the free GitHub Pages address is now active.');
           }
           main().catch(error => {
-            console.error(error.message);
+            const message = error.message.replace(/%/g, '%25').replace(/\r/g, '%0D').replace(/\n/g, '%0A');
+            console.error(`::error::${message}`);
             process.exitCode = 1;
           });
           JS
